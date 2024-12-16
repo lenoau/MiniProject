@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CommentList from './댓글/CommentList';
+import Board from './게시판/Board';
+// import CommentList from './댓글/CommentList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <CommentList />
+    {/* <CommentList /> */}
+    <Board />
   </React.StrictMode>
 );
 

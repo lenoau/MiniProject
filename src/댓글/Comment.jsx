@@ -8,7 +8,6 @@ export default function Comment(props) {
 const [up, setup] = useState(0);
 const [down, setDown] = useState(0);
 
-
   return (
     <div className='justify-between h-full pt-3 pb-5 border-b-2 border-gray-300 flex'>
         <div className='flex ml-8 justify-center flex-col'>
