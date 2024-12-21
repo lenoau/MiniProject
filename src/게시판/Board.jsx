@@ -14,7 +14,7 @@ export default function Board() {
                 </span>
             </div>
             <div className='border-t-2 border-[#3a3131] inline-block'>
-                askldfjlaskdfjalsdkfjasld;f
+                ask
             </div>
     </div>
   )
