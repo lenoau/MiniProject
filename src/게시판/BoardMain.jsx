@@ -24,6 +24,7 @@ export default function Board() {
     { number: 1, title: '안녕하세요 첫 글입니다 안녕하세요 첫 글 입니다 40자 초과시켜 봅시다 제에바앙랑랑제발나와라아린아런이', name: '류승진', day: new Date(), check: 20, up: 0 },
     { number: 2, title: '두 번째 글입니다', name: '김준우', day: new Date(), check: 15, up: 3 },
     { number: 3, title: '나혼렙 존잼', name: '정원영', day: new Date(), check: 10, up: 5 },
+    { number: 4, title: '열혈초등학교 존잼', name: '김준영', day: new Date(), check: 30, up: 7 },
   ];
 
   return (

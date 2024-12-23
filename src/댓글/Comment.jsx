@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CommentTime from './CommentTime';
+import CommentTime from '../컴포넌트List/CommentTime';
 import Up from '../Image/Up.png';
 import Down from '../Image/Down.png';
 
