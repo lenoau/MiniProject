@@ -1,25 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import BoardMain from './게시판/BoardMain';
+import Title from './컴포넌트List/Title';
+import Write from './게시판/BoardWrite';
+import { Route, Routes, Link, BrowserRouter } from 'react-router-dom';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='Main'>
+      {/* <Write /> */}
+      <BrowserRouter>
+         <Routes>
+          <Route path='/' element={<Title />} />
+          <Route path='/게시판Main' element={<BoardMain />} /> 
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;
