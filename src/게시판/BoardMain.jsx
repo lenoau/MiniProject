@@ -29,7 +29,7 @@ export default function Board() {
 
   return (
     <div>
-        <Title />
+      <Title />
         <article className='items-center justify-center w-[1280px] mx-auto'>
           <section>
             <div>

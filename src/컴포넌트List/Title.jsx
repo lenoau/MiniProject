@@ -10,11 +10,11 @@ export default function Title() {
                 <img src={Logo} alt='logo' />
             </Link>
             <div className='flex items-center pt-5 pr-16'>
-                <Link to='/로그인' className='px-3 border-r'>
+                <Link to='/Login' className='px-3 border-r'>
                     <span>로그인</span>
                 </Link>
 
-                <Link to='' className='px-3 border-r'> {/* 회원가입Page 링크 추가필요 */}
+                <Link to='/Membership' className='px-3 border-r'>
                     <span>회원가입</span>
                 </Link>
 
@@ -26,7 +26,7 @@ export default function Title() {
         <div className='pt-2 border-b-2 border-black'></div>
         <section className=''> {/* gird 1col의 2row 사용 모든row -> row-span-full사용하기*/}
                 <div className='flex'>
-                    <span className='mx-5'><Link to='게시판Main'><div className='py-5 font-bold hover:text-sky-500'>커뮤니티</div></Link></span>
+                    <span className='mx-5'><Link to='../Board'><div className='py-5 font-bold hover:text-sky-500'>커뮤니티</div></Link></span>
                     <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>연재웹툰</div></Link></span>
                     <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>무료웹툰</div></Link></span>
                     <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>유료웹툰</div></Link></span>
