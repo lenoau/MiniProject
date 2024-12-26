@@ -18,7 +18,7 @@ export default function Title() {
                     <span>회원가입</span>
                 </Link>
 
-                <Link to='' className='px-3'> {/* MyPage 링크 추가필요 */}
+                <Link to='/MyPage' className='px-3'> {/* MyPage 링크 추가필요 */}
                     <span>마이페이지</span>
                 </Link>
             </div>

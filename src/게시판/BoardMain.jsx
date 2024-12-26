@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import Left from '../Image/left.png'
 import Right from '../Image/right.png'
@@ -69,36 +70,36 @@ export default function Board() {
           <div className='col-span-2 col-start-3 text-center mt-[80px]'> {/* grid 2칸사용 및 grid 3번째 블록부터 시작*/}
             <ul className='flex items-center justify-center text-lg'>
               <li className='items-center justify-center mr-4'>
-                <a href='' className='flex items-end'> {/* 이전10개 page로 이동 링크 추가필요 */}
+                <Link to='' className='flex items-end'> {/* 이전10개 page로 이동 링크 추가필요 */}
                   <img src={Left} alt='Left' />
                   이전
-                </a>
+                </Link>
               </li>
-              <a href=''><li className='mr-4'>1</li></a>
-              <a href=''><li className='mr-4'>2</li></a>
-              <a href=''><li className='mr-4'>3</li></a>
-              <a href=''><li className='mr-4'>4</li></a>
-              <a href=''><li className='mr-4'>5</li></a>
-              <a href=''><li className='mr-4'>6</li></a>
-              <a href=''><li className='mr-4'>7</li></a>
-              <a href=''><li className='mr-4'>8</li></a>
-              <a href=''><li className='mr-4'>9</li></a>
-              <a href=''><li className=''>10</li></a>
+              <Link to=''><li className='mr-4'>1</li></Link>
+              <Link to=''><li className='mr-4'>2</li></Link>
+              <Link to=''><li className='mr-4'>3</li></Link>
+              <Link to=''><li className='mr-4'>4</li></Link>
+              <Link to=''><li className='mr-4'>5</li></Link>
+              <Link to=''><li className='mr-4'>6</li></Link>
+              <Link to=''><li className='mr-4'>7</li></Link>
+              <Link to=''><li className='mr-4'>8</li></Link>
+              <Link to=''><li className='mr-4'>9</li></Link>
+              <Link to=''><li className=''>10</li></Link>
               <li className='flex items-center ml-4'>
-                <a href='' className='flex items-end'> {/* 다음10개 page로 이동 링크 추가필요 */}
+                <Link to='' className='flex items-end'> {/* 다음10개 page로 이동 링크 추가필요 */}
                   다음
                   <img src={Right} alt='Right' />
-                </a>
+                </Link>
               </li>
             </ul>
-            <div className='inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
+            <div className='SearchCategory inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
               <select className='h-[40px] pr-10 border-r-2'>
                 <option>제목</option>
                 <option>내용</option>
                 <option>닉네임</option>
               </select>
               <input className='h-[40px] w-[230px]' type='text' name='keyword' />
-              <button className='h-[40px] w-[60px] pl-3 border-l-2' type='submit'><img src={Search} alt='search' /></button>
+              <button className='Search h-[40px] w-[60px] pl-3 border-l-2' type='submit'><img src={Search} alt='search' /></button>
             </div>
           </div>
         </article>

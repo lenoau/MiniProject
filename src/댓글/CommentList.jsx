@@ -20,8 +20,8 @@ export default function CommentList() {
         {comments.map(comment => {
             return (
                 <Comment name = {comment.name} comment = {comment.comment} day = {comment.day}/>
-            );
-        })};
+            )
+        })}
     </div>
-  );
+  )
 }

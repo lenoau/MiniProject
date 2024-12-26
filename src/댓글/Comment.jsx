@@ -16,9 +16,13 @@ return (
           <span className='text-[12px] text-gray-600'><CommentTime date={props.day}/></span>
       </div>
       <div className='flex mt-auto'>
-          <img src={Up} alt='Up' onClick={() => {setup(up + 1)}}/><span className='mx-3'>{up}</span>
-          <img src={Down} alt='Down' onClick={() => {setDown(down + 1)}}/><span className='mx-3'>{down}</span>
+        <button className='flex items-center mr-2 border rounded-md' onClick={() => {setup(up + 1)}}>
+            <img src={Up} alt='Up' /><span className='mx-3'>{up}</span>
+        </button>
+        <button className='flex items-center border rounded-md' onClick={() => {setDown(down + 1)}}>
+            <img src={Down} alt='Down' /><span className='mx-3'>{down}</span>
+        </button>
       </div>
   </div>
-);
+)
 }
