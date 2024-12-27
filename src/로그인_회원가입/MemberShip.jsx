@@ -6,7 +6,6 @@ import LoginBg from '../Image/로그인뒷배경.png'
 import kakao from '../Image/카카오 로고.png'
 import naver from '../Image/네이버 로고.png'
 import google from '../Image/구글 로고.png'
-import { useForm } from 'react-hook-form'
 
 export default function MemberShip() {
 
@@ -17,6 +16,16 @@ export default function MemberShip() {
         nickName:'',
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (user.password !== user.passwordcheck) {
+            setErrorMessage('비밀 번호가 일치하지 않습니다.');
+        } else {
+            setErrorMessage('');
+        }
+    }, [user.password, user.passwordcheck]);
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setUser({ ...user, [id]: value });
@@ -24,14 +33,24 @@ export default function MemberShip() {
 
     const handlesubmit = async (e) => {
         e.preventDefault();
+
+        if (errorMessage) {
+            alert('비밀번호를 확인해주세요.');
+            return;
+          }
+
         try {
-            await axios.get('https://10.125.121.117:8080/join', user);
+            await axios.post('http://10.125.121.117:8080/join', user);
             alert('회원가입 완료');
             window.location.href = '/';
         }
         catch (error) {
-            console.error(error);
-            alert('회원가입 실패');
+            if (error.response) {
+                console.error('Response Error:', error.response.data);
+              } else {
+                console.error('Network Error:', error.message);
+              }
+              alert('회원가입 실패');
         }
     }
 
@@ -58,6 +77,7 @@ export default function MemberShip() {
                                         className='flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
                                 <input type='password' id='passwordcheck' value={user.passwordcheck} onChange={handleChange} placeholder="비밀번호확인" 
                                         className='mt-5 flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
+                                         {errorMessage && (<div className='mt-2 text-sm text-red-500'>{errorMessage}</div>)}
                                 <input type='text' id='nickName' value={user.nickName} onChange={handleChange} placeholder="닉네임"
                                         className='mt-5 flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
                                 <button type='submit' className='flex mt-5 rounded-md text-xl items-center justify-center bg-[#dc3e3e] w-3/4 h-[50px] text-white font-bold'>
