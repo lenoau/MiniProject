@@ -1,41 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import left from '../Image/left.png';
+import right from '../Image/right.png';
 
 export default function ToonCard() {
-  return (
-    <div>
-        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-    <a href="#">
-        <img class="p-8 rounded-t-lg" src="/docs/images/products/apple-watch.png" alt="product image" />
-    </a>
-    <div class="px-5 pb-5">
-        <a href="#">
-            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport</h5>
-        </a>
-        <div class="flex items-center mt-2.5 mb-5">
-            <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-                <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
+    const [slide, setSlide] = useState(0); // useState로 초기화
+    const slideLength = 5;
+    const [webtoon, setWebtoon] = useState([]); // 기본값 빈 배열로 설정
+
+    const apikey = 'https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/webtoons?';
+    let url = 'provider=NAVER&page=1&perPage=30&isFree=true&updateDay=SAT';
+    const api_url = `${apikey}${url}`;
+
+    const handleNext = () => {
+        if (slide + slideLength < webtoon.length) {
+            setSlide((prev) => prev + slideLength);
+        }
+    };
+
+    const handlePrev = () => {
+        if (slide - slideLength >= 0) {
+            setSlide((prev) => prev - slideLength);
+        }
+    };
+
+    const viewWebtoons = webtoon.slice(slide, slide + slideLength);
+
+    useEffect(() => {
+        const fetchWebtoon = async () => {
+            try {
+                const response = await fetch(api_url);
+                const data = await response.json();
+
+                if (data.webtoons && Array.isArray(data.webtoons)) {
+                    setWebtoon(data.webtoons);
+                }
+            } catch (error) {
+                console.error("웹툰 에러:", error);
+            }
+        };
+        fetchWebtoon();
+    }, []);
+
+    return (
+        <div className="w-[1280px] mx-auto mt-10 flex">
+            <div>
+                <div className='w-[1280px] mt-10 font-bold text-3xl'>
+                    <div>토요웹툰</div>
+                    <div className='text-xl mt-5'>
+                        <span className='mr-5'>네이버</span>
+                        <span className='mr-5'>카카오</span>
+                        <span className='mr-5'>카카오페이지</span>
+                    </div>
+                </div>
+                <div className="relative">
+                    <div className='w-[1280px] mt-10 grid grid-cols-5 gap-4'>
+                        {viewWebtoons.length && viewWebtoons.map((webtoon) => (
+                            <div key={webtoon.id} className="pb-5 flex flex-col">
+                                <img src={webtoon.thumbnail[0]} alt='webtoonimg' className="w-full h-[300px] object-cover mb-3"/>
+                                <p className="text-lg font-bold mb-2">
+                                    <span className="block overflow-hidden text-ellipsis whitespace-nowrap">{webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}</span>
+                                </p>
+                                <p className="text-sm font-bold">{webtoon.authors.join(" / ")}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <button className="absolute left-[-50px] px-4 py-2 disabled:opacity-50 top-[35%]" 
+                        onClick={handlePrev} 
+                        disabled={slide === 0}>
+                        <img src={left} alt='left'/>
+                    </button>
+                    <button className="absolute right-[-50px] px-4 py-2 disabled:opacity-50 top-[35%]" 
+                        onClick={handleNext} 
+                        disabled={slide + slideLength >= webtoon.length}>
+                        <img src={right} alt='right'/>
+                    </button>
+                </div>
             </div>
-            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200">5.0</span>
         </div>
-        <div class="flex items-center">
-            <span class="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
-        </div>
-    </div>
-</div>
-    </div>
-  )
+    );
 }
