@@ -1,16 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import Logo from '../Image/Logo.png'
 import LoginBg from '../Image/로그인뒷배경.png' 
 import kakao from '../Image/카카오 로고.png'
 import naver from '../Image/네이버 로고.png'
 import google from '../Image/구글 로고.png'
+import { useForm } from 'react-hook-form'
 
 export default function MemberShip() {
 
-    const login = () => {
-        console.log('회원가입 클릭');
-      };
+    const [user, setUser] = useState({
+        userId:'',
+        password:'',
+        passwordcheck: '',
+        nickName:'',
+    });
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setUser({ ...user, [id]: value });
+    };
+
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.get('https://10.125.121.117:8080/join', user);
+            alert('회원가입 완료');
+            window.location.href = '/';
+        }
+        catch (error) {
+            console.error(error);
+            alert('회원가입 실패');
+        }
+    }
 
   return (
     <div className='items-center justify-center w-[1280px] mx-auto'>
@@ -28,17 +51,19 @@ export default function MemberShip() {
                 </div>
                   <div className='flex flex-col items-center mt-5'>
                         <div className='flex flex-col items-center w-full'>
-                        <input type='text' className='flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' 
-                                    placeholder="아이디" />
-                        <input type='password' className='flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' 
-                                    placeholder="비밀번호" />
-                        <input type='password' className='mt-5 flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' 
-                                    placeholder="비밀번호확인" />
-                        <input type='text' className='mt-5 flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' 
-                                    placeholder="닉네임" />
-                        <button className='flex mt-5 rounded-md text-xl items-center justify-center bg-[#dc3e3e] w-3/4 h-[50px] text-white font-bold'
-                                    onClick={login}>회원가입
-                        </button>
+                            <form className='flex flex-col items-center w-full' onSubmit={handlesubmit}>
+                                <input type='text' id='userId' value={user.userId} onChange={handleChange} placeholder="아이디"
+                                        className='flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
+                                <input type='password' id='password' value={user.password} onChange={handleChange} placeholder="비밀번호" 
+                                        className='flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
+                                <input type='password' id='passwordcheck' value={user.passwordcheck} onChange={handleChange} placeholder="비밀번호확인" 
+                                        className='mt-5 flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
+                                <input type='text' id='nickName' value={user.nickName} onChange={handleChange} placeholder="닉네임"
+                                        className='mt-5 flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3' />
+                                <button type='submit' className='flex mt-5 rounded-md text-xl items-center justify-center bg-[#dc3e3e] w-3/4 h-[50px] text-white font-bold'>
+                                    회원가입
+                                </button>
+                            </form>
                         </div>
                         <span className='mt-5 text-white'>SNS계정으로 간편하게 회원가입</span>
                         <div className='flex flex-col items-center w-full'>

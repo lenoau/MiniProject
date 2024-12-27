@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../Image/Logo.png'
 import LoginBg from '../Image/로그인뒷배경.png'

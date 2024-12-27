@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from '../Image/Logo.png'
 import { Link } from 'react-router-dom'
 
 export default function Title() {
+
+    const [ login, setLogin] = useState(false)
+
+    const loginToggle = () => {
+        setLogin((prev) => !prev);
+    };
+
   return (
     <div className='items-center justify-center w-[1280px] mx-auto'>
         <div className='flex justify-between bg-white'>
@@ -10,14 +17,21 @@ export default function Title() {
                 <img src={Logo} alt='logo' />
             </Link>
             <div className='flex items-center pt-5 pr-16'>
-                <Link to='/Login' className='px-3 border-r'>
-                    <span>로그인</span>
-                </Link>
+                { login ? 
+                (
+                    <button onClick={loginToggle} className='px-3 border-r'>로그아웃</button>
+                ) : 
+                (
+                    <>
+                        <Link to='/Login' className='px-3 border-r'>
+                            <span>로그인</span>
+                        </Link>
 
-                <Link to='/Membership' className='px-3 border-r'>
-                    <span>회원가입</span>
-                </Link>
-
+                        <Link to='/Membership' className='px-3 border-r'>
+                            <span>회원가입</span>
+                        </Link>
+                    </>
+                )}
                 <Link to='/MyPage' className='px-3'> {/* MyPage 링크 추가필요 */}
                     <span>마이페이지</span>
                 </Link>
