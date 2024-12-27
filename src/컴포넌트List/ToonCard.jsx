@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import left from '../Image/left.png';
 import right from '../Image/right.png';
+import { Link } from 'react-router-dom';
 
 export default function ToonCard() {
     const [slide, setSlide] = useState(0); // useState로 초기화
@@ -46,11 +47,6 @@ export default function ToonCard() {
             <div>
                 <div className='w-[1280px] mt-10 font-bold text-3xl'>
                     <div>토요웹툰</div>
-                    <div className='text-xl mt-5'>
-                        <span className='mr-5'>네이버</span>
-                        <span className='mr-5'>카카오</span>
-                        <span className='mr-5'>카카오페이지</span>
-                    </div>
                 </div>
                 <div className="relative">
                     <div className='w-[1280px] mt-10 grid grid-cols-5 gap-4'>
