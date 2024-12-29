@@ -1,10 +1,10 @@
 import React from 'react'
-import Title from '../컴포넌트List/Title'
+import Title from '../웹툰화면_컴포넌트/Title'
 import { useState } from 'react'
-import BoardSubList from '../컴포넌트List/BoardSubList'
-
+import BoardSubList from '../게시판,댓글_컴포넌트/BoardSubList'
 
 export default function BoardSub() {
+
     const [boardData, setBoardData] = useState([
       {
         number: 1,

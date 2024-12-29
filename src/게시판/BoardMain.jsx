@@ -6,7 +6,7 @@ import Left from '../Image/left.png'
 import Right from '../Image/right.png'
 import Search from '../Image/검색마크.png'
 import BoardList from './BoardList'
-import Title from '../컴포넌트List/Title'
+import Title from '../웹툰화면_컴포넌트/Title'
 import BoardWrite from './BoardWrite'
 
 export default function Board() {

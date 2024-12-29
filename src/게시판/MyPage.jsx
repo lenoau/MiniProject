@@ -1,5 +1,5 @@
 import React from 'react'
-import Title from '../컴포넌트List/Title'
+import Title from '../웹툰화면_컴포넌트/Title'
 
 export default function MyPage() {
   return (

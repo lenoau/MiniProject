@@ -4,7 +4,7 @@ import commentcount from '../Image/댓글수.png'
 import leadtime from '../Image/업로드.png'
 import Up from '../Image/Up.png'
 import CommentList from '../댓글/CommentList'
-import CommentTime from '../컴포넌트List/CommentTime'
+import CommentTime from './CommentTime'
 import { useState } from 'react'
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import CommentTime from '../컴포넌트List/CommentTime'
+import CommentTime from '../게시판,댓글_컴포넌트/CommentTime'
 
 export default function BoardList(props) {
     
