@@ -41,7 +41,7 @@ export default function Title() {
         <section className=''> {/* gird 1col의 2row 사용 모든row -> row-span-full사용하기*/}
                 <div className='flex'>
                     <span className='mx-5'><Link to='../Board'><div className='py-5 font-bold hover:text-sky-500'>커뮤니티</div></Link></span>
-                    <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>연재웹툰</div></Link></span>
+                    <span className='mx-5'><Link to='/day'><div className='py-5 font-bold hover:text-sky-500'>연재웹툰</div></Link></span>
                     <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>무료웹툰</div></Link></span>
                     <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>유료웹툰</div></Link></span>
                 </div>
