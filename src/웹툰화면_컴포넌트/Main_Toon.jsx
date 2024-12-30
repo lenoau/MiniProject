@@ -3,6 +3,8 @@ import SlideButton from './SlideButton';
 import ToonList from './ToonList';
 
 export default function ToonCard() {
+
+    const [currentDay, setCurrentDay] = useState(''); //날짜별 웹툰데이터
     const [neSlide, setNeSlide] = useState(0);  // 네이버 슬라이드
     const [kaSlide, setKaSlide] = useState(0);  // 카카오 슬라이드
     const [kapageSlide, setKapageSlide] = useState(0); // 카카오페이지 슬라이드
@@ -12,9 +14,17 @@ export default function ToonCard() {
     const [kapageWebtoons, setKapageWebtoons] = useState([]);
 
     const apikey = 'https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/webtoons?';
-    const neUrl = 'provider=NAVER&page=1&perPage=50&isFree=true&updateDay=SAT';
-    const kaUrl = 'provider=KAKAO&page=1&perPage=50&isFree=true&updateDay=SAT';
-    const kapageUrl = 'provider=KAKAO_PAGE&page=1&perPage=50&sort=DESC&isFree=true&updateDay=SAT';
+
+    
+    const days = {
+        MON: '월요웹툰',
+        TUE: '화요웹툰',
+        WED: '수요웹툰',
+        THU: '목요웹툰',
+        FRI: '금요웹툰',
+        SAT: '토요웹툰',
+        SUN: '일요웹툰',
+      };
 
     // 네이버 웹툰 슬라이드 버튼
     const handleNeNext = () => {
@@ -56,7 +66,23 @@ export default function ToonCard() {
     };
 
     useEffect(() => {
+        const calculateDay = () => {
+            const koreanTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+            const dayIndex = new Date(koreanTime).getDay();
+            const dayMap = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            setCurrentDay(dayMap[dayIndex]);
+        };
+        calculateDay();
+    },[]);
+
+    useEffect(() => {
         const fetchWebtoons = async () => {
+            if (!currentDay) return
+
+            const neUrl = `provider=NAVER&page=1&perPage=50&isFree=true&updateDay=${currentDay}`;
+            const kaUrl = `provider=KAKAO&page=1&perPage=50&isFree=true&updateDay=${currentDay}`;
+            const kapageUrl = `provider=KAKAO_PAGE&page=1&perPage=50&sort=DESC&isFree=true&updateDay=${currentDay}`;
+
             try {
                 const neResponse = await fetch(`${apikey}${neUrl}`);
                 const neData = await neResponse.json();
@@ -75,19 +101,19 @@ export default function ToonCard() {
             }
         };
         fetchWebtoons();
-    }, []);
+    }, [currentDay]);
 
     return (
         <div className="w-[1280px] mx-auto mt-10 flex">
             <div>
                 <div className="w-[1280px] mt-10 font-bold text-3xl">
-                    <div>토요웹툰</div>
+                <div>{days[currentDay]}</div>
                 </div>
                 <div className="pt-2 border-b-2 border-gray"></div>
                 
                 {/* 네이버 웹툰 */}
                 <div className="relative">
-                    <div className="font-bold text-2xl mt-10">네이버</div>
+                    <div className="mt-10 mb-5 text-2xl font-bold">네이버</div>
                     <ToonList webtoons={neWebtoons} slide={neSlide} slideLength={slideLength} />
                     <SlideButton direction="left" onClick={handleNePrev} disabled={neSlide === 0} />
                     <SlideButton direction="right" onClick={handleNeNext} disabled={neSlide + slideLength >= neWebtoons.length} />
@@ -95,7 +121,7 @@ export default function ToonCard() {
                 
                 {/* 카카오 웹툰 */}
                 <div className="relative">
-                    <div className="font-bold text-2xl mt-10">카카오</div>
+                    <div className="mt-10 mb-5 text-2xl font-bold">카카오</div>
                     <ToonList webtoons={kaWebtoons} slide={kaSlide} slideLength={slideLength} />
                     <SlideButton direction="left" onClick={handleKaPrev} disabled={kaSlide === 0} />
                     <SlideButton direction="right" onClick={handleKaNext} disabled={kaSlide + slideLength >= kaWebtoons.length} />
@@ -103,7 +129,7 @@ export default function ToonCard() {
 
                 {/* 카카오 페이지 웹툰 */}
                 <div className="relative">
-                    <div className="font-bold text-2xl mt-10">카카오페이지</div>
+                    <div className="mt-10 mb-5 text-2xl font-bold">카카오페이지</div>
                     <ToonList webtoons={kapageWebtoons} slide={kapageSlide} slideLength={slideLength} />
                     <SlideButton direction="left" onClick={handleKapagePrev} disabled={kapageSlide === 0} />
                     <SlideButton direction="right" onClick={handleKapageNext} disabled={kapageSlide + slideLength >= kapageWebtoons.length} />

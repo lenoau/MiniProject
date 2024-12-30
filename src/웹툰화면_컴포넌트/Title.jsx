@@ -32,13 +32,13 @@ export default function Title() {
                         </Link>
                     </>
                 )}
-                <Link to='/MyPage' className='px-3'> {/* MyPage 링크 추가필요 */}
+                <Link to='/MyPage' className='px-3'>
                     <span>마이페이지</span>
                 </Link>
             </div>
         </div>
         <div className='pt-2 border-b-2 border-black'></div>
-        <section className=''> {/* gird 1col의 2row 사용 모든row -> row-span-full사용하기*/}
+        <section className=''> 
                 <div className='flex'>
                     <span className='mx-5'><Link to='../Board'><div className='py-5 font-bold hover:text-sky-500'>커뮤니티</div></Link></span>
                     <span className='mx-5'><Link to='/day'><div className='py-5 font-bold hover:text-sky-500'>연재웹툰</div></Link></span>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-export default function MainToonCard({ webtoons }) {
-    return (
-      <div className="w-[1280px] grid grid-cols-5 gap-4">
+export default function EveryDayToonCard( {webtoons}) {
+  return (
+    <div>
+        <div className="">
             {webtoons.map((webtoon) => (
                 <a
                     key={webtoon.id}
@@ -21,9 +22,9 @@ export default function MainToonCard({ webtoons }) {
                             {webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}
                         </span>
                     </p>
-                    <p className="overflow-hidden text-sm font-bold text-ellipsis whitespace-nowrap">{webtoon.authors.join(" / ")}</p>
                 </a>
             ))}
         </div>
-    );
+    </div>
+  )
 }

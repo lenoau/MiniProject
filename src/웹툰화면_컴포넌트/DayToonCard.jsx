@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-export default function MainToonCard({ webtoons }) {
-    return (
-      <div className="w-[1280px] grid grid-cols-5 gap-4">
+export default function DayToonCard( {webtoons}) {
+  return (
+    <div>
+        <div className="w-[1280px] grid grid-cols-7 gap-4">
             {webtoons.map((webtoon) => (
                 <a
                     key={webtoon.id}
@@ -25,5 +26,6 @@ export default function MainToonCard({ webtoons }) {
                 </a>
             ))}
         </div>
-    );
+    </div>
+  )
 }
