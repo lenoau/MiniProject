@@ -37,7 +37,7 @@ export default function App() {
           <Route path='/day/KakaoMain' element={<KakaoMain />} />
           <Route path='/day/KakaoPageMain' element={<KakaoPageMain />} />
 
-          {/* 요일별 웹툰 */}
+          {/* 요일별 전체웹툰 */}
           <Route path='/day/NaverMain/:id' element={<DayNaver />} />
           
         </Routes>
