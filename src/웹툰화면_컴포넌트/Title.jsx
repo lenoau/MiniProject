@@ -19,7 +19,15 @@ export default function Title() {
             <div className='flex items-center pt-5 pr-16'>
                 { login ? 
                 (
-                    <button onClick={loginToggle} className='px-3 border-r'>로그아웃</button>
+                    <>
+                        <button onClick={loginToggle} className='px-3 border-r'>
+                            로그아웃
+                        </button>
+
+                        <Link to='/MyPage' className='px-3'>
+                            <span>마이페이지</span>
+                        </Link>
+                    </>
                 ) : 
                 (
                     <>
@@ -32,9 +40,7 @@ export default function Title() {
                         </Link>
                     </>
                 )}
-                <Link to='/MyPage' className='px-3'>
-                    <span>마이페이지</span>
-                </Link>
+                
             </div>
         </div>
         <div className='pt-2 border-b-2 border-black'></div>
@@ -42,8 +48,8 @@ export default function Title() {
                 <div className='flex'>
                     <span className='mx-5'><Link to='../Board'><div className='py-5 font-bold hover:text-sky-500'>커뮤니티</div></Link></span>
                     <span className='mx-5'><Link to='/day'><div className='py-5 font-bold hover:text-sky-500'>연재웹툰</div></Link></span>
-                    <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>무료웹툰</div></Link></span>
-                    <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>유료웹툰</div></Link></span>
+                    {/* <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>무료웹툰</div></Link></span>
+                    <span className='mx-5'><Link to=''><div className='py-5 font-bold hover:text-sky-500'>유료웹툰</div></Link></span> */}
                 </div>
                 <div className='pt-2 border-b-2 border-black'></div>
         </section>

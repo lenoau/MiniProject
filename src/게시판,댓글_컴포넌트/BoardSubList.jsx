@@ -24,7 +24,6 @@ export default function BoardSubList(props) {
 
   const handleSubmit = () => {
     if (comment.trim()) {
-      // 댓글 제출 추가
       console.log('댓글 제출:', comment);
       setCommenting(false);
       setComment('');
@@ -82,7 +81,7 @@ export default function BoardSubList(props) {
         </div>
       ) : (
         <button
-          className='p-5 w-full text-start'
+          className='w-full p-5 text-start'
           onClick={onComment}>댓글을 남겨주세요.
         </button>
       )}

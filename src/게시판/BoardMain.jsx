@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import Left from '../Image/left.png'
 import Right from '../Image/right.png'
 import Search from '../Image/검색마크.png'
@@ -20,6 +19,7 @@ export default function Board() {
     const PopupClose = () => {
         setWriteOpen(false);
     };
+    
 
   const boardData = [
     { number: 1, title: '안녕하세요 첫 글입니다 안녕하세요 첫 글 입니다 40자 초과시켜 봅시다 제에바앙랑랑제발나와라아린아런이', name: '류승진', day: new Date(), check: 20, up: 0 },

@@ -56,22 +56,18 @@ export default function Main() {
       fetchWebtoons();
   }, [currentDay]);
 
-  const handleDayClick = (day) => {
-    setCurrentDay(day);
-  };
-
   return (
     <div className='items-center justify-center w-[1280px] mx-auto'>
       <Title />
       <WebToonLink />
       <div className='font-bold w-[1280px] mx-auto mb-10 mt-5'>
           <Link to='/day/NaverMain/MON' className='mr-5'>월요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('TUE')} className='mr-5'>화요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('WED')} className='mr-5'>수요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('THU')} className='mr-5'>목요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('FRI')} className='mr-5'>금요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('SAT')} className='mr-5'>토요웹툰</Link>
-          <Link to='#' onClick={() =>handleDayClick('SUN')} className='mr-5'>일요웹툰</Link>
+          <Link to='/day/NaverMain/TUE' className='mr-5'>화요웹툰</Link>
+          <Link to='/day/NaverMain/WED' className='mr-5'>수요웹툰</Link>
+          <Link to='/day/NaverMain/THU' className='mr-5'>목요웹툰</Link>
+          <Link to='/day/NaverMain/FRI' className='mr-5'>금요웹툰</Link>
+          <Link to='/day/NaverMain/SAT' className='mr-5'>토요웹툰</Link>
+          <Link to='/day/NaverMain/SUN' className='mr-5'>일요웹툰</Link>
       </div>
       <div className='pt-2 border-b-2'></div>
       <div className='mt-2 mb-5 text-xl font-bold'>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams,Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import Title from '../웹툰화면_컴포넌트/Title'
 import WebToonLink from '../웹툰화면_컴포넌트/WebToonLink'
 import MainToonCard from '../웹툰화면_컴포넌트/MainToonCard'
