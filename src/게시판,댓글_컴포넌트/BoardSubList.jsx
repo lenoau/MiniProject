@@ -5,13 +5,28 @@ import leadtime from '../Image/업로드.png'
 import Up from '../Image/Up.png'
 import CommentList from '../댓글/CommentList'
 import CommentTime from './CommentTime'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 
 export default function BoardSubList(props) {
 
   const [commenting, setCommenting] = useState(false);
   const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://10.125.121.117:8080/comments/${props.postId}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error('Error :', error);
+      }
+    };
+
+    fetchComments();
+  }, [props.postId]);
 
   const onComment = () => {
     setCommenting(true);
@@ -22,11 +37,27 @@ export default function BoardSubList(props) {
     setComment('');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (comment.trim()) {
-      console.log('댓글 제출:', comment);
-      setCommenting(false);
-      setComment('');
+      try {
+        const newComment = {
+          name: '사용자 이름', // DB와 같은 이름으로 맞추기
+          comment: comment,
+          day: new Date(),
+        };
+
+        // 서버에 댓글 저장
+        const response = await axios.post(`http://10.125.121.117:8080/comments/${props.postId}`, newComment);
+
+        // 서버에서 반환된 데이터로 댓글 목록 업데이트
+        setComments((prevComments) => [...prevComments, response.data]);
+
+        setCommenting(false);
+        setComment('');
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        alert('댓글 작성에 실패했습니다.');
+      }
     } else {
       alert('댓글을 입력해주세요.');
     }
@@ -48,10 +79,10 @@ export default function BoardSubList(props) {
           </span>
           <span className="flex UP">
             <img src={commentcount} alt="commentcount" className="mr-2" />
-            {props.comment}
+            {comments.length}
           </span>
         </div>
-        <div className="pt-10 border-t Board">안녕하세요 첫 글 입니다.</div>
+        <div className="pt-10 border-t Board">{props.content}</div>
         <div className="flex mt-10">
           <button className="flex" onClick={props.onUpClick}>
             <img src={Up} alt="up" className="pr-2" />
@@ -81,8 +112,8 @@ export default function BoardSubList(props) {
         </div>
       ) : (
         <button
-          className='w-full p-5 text-start'
-          onClick={onComment}>댓글을 남겨주세요.
+          className='w-full p-5 text-start' onClick={onComment}>
+          댓글을 남겨주세요.
         </button>
       )}
         </div>

@@ -23,8 +23,12 @@ export default function MemberShip() {
     });
 
     useEffect(() => {
-        if (user.password !== user.passwordcheck) {
-            setErrorMessage((prev) => ({ ...prev, passwordcheck: '비밀번호가 일치하지 않습니다.' }));
+        if (user.password && user.passwordcheck) {
+            if (user.password !== user.passwordcheck) {
+                setErrorMessage((prev) => ({ ...prev, passwordcheck: '비밀번호가 일치하지 않습니다.' }));
+            } else {
+                setErrorMessage((prev) => ({ ...prev, passwordcheck: '' }));
+            }
         } else {
             setErrorMessage((prev) => ({ ...prev, passwordcheck: '' }));
         }
@@ -97,10 +101,11 @@ export default function MemberShip() {
                                     value={user.userId}
                                     onChange={handleChange}
                                     placeholder="아이디"
-                                    className="flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3"
+                                    className={`flex w-3/4 pl-5 mb-5 h-[50px] text-white border-2 rounded-md resize-none bg-black/50 placeholder:py-3 
+                                        ${ errorMessage.username ? 'border-red-500' : 'border-gray-500' }`}
                                 />
                                 {errorMessage.username && (
-                                    <div className="mb-2 text-sm text-red-500">{errorMessage.userId}</div>
+                                    <div className="mb-2 text-sm text-red-400">{errorMessage.username}</div>
                                 )}
                                 <div className="mb-2 text-sm text-gray-300">영문, 숫자를 포함한 6자 이상의 비밀번호를 입력해주세요.</div>
                                 <input
@@ -109,7 +114,8 @@ export default function MemberShip() {
                                     value={user.password}
                                     onChange={handleChange}
                                     placeholder="비밀번호"
-                                    className="flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3"
+                                    className={`flex w-3/4 pl-5 h-[50px] text-white border-2 rounded-md resize-none bg-black/50 placeholder:py-3
+                                        ${errorMessage.password || errorMessage.passwordcheck ? 'border-red-500' : 'border-gray-500'}`}
                                 />
                                 {errorMessage.password && (
                                     <div className="mt-2 text-sm text-red-500">{errorMessage.password}</div>
@@ -120,7 +126,8 @@ export default function MemberShip() {
                                     value={user.passwordcheck}
                                     onChange={handleChange}
                                     placeholder="비밀번호 확인"
-                                    className="mt-5 flex w-3/4 pl-5 h-[50px] text-white border-2 border-gray-500 rounded-md resize-none bg-black/50 placeholder:py-3"
+                                    className={`mt-5 flex w-3/4 pl-5 h-[50px] text-white border-2 rounded-md resize-none bg-black/50 placeholder:py-3
+                                        ${errorMessage.passwordcheck ? 'border-red-500' : 'border-gray-500'}`}
                                 />
                                 {errorMessage.passwordcheck && (
                                     <div className="mt-2 text-sm text-red-500">{errorMessage.passwordcheck}</div>

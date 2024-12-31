@@ -1,27 +1,17 @@
 import React from 'react'
 import Comment from './Comment'
 
-const comments = [
-    {
-        name: '류승진',
-        comment: '첫 댓글 입니다.',
-        day: new Date(),
-    },
-    {
-        name: '김준우',
-        comment: '두번째 댓글 입니다.',
-        day: new Date(),
-    },
-];
-
-export default function CommentList() {
+export default function CommentList( {comments} ) {
   return (
     <div>
-        {comments.map(comment => {
-            return (
-                <Comment name = {comment.name} comment = {comment.comment} day = {comment.day}/>
-            )
-        })}
+      {comments.map((comment, index) => (
+        <Comment
+          key={index}
+          name={comment.name}
+          comment={comment.comment}
+          day={new Date(comment.day).toLocaleDateString()}
+        />
+      ))}
     </div>
   )
 }
