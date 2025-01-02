@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../Image/Logo.png'
 import axios from 'axios'
 import LoginBg from '../Image/로그인뒷배경.png'
 import kakao from '../Image/카카오 로고.png'
 import naver from '../Image/네이버 로고.png'
 import google from '../Image/구글 로고.png'
+import { useAuth } from '../웹툰화면_컴포넌트/AuthProvider'
 
 export default function Login() {
 
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
 
   const [user, setUser] = useState({
@@ -39,10 +42,15 @@ export default function Login() {
 
       if (response.status === 200) {
         console.log('로그인 성공:', response.data);
-        if (response.data.token) {
-          localStorage.setItem('authToken', response.data.token);  
-        }
-        window.location.href = '/';
+
+        // 전역 상태에 로그인 반영
+        login(response.headers.get('Authorization')); // 전역 상태에 토큰 저장
+
+        // 로컬 스토리지에 토큰 저장 (필요하면 사용)
+        localStorage.setItem('authToken', response.headers.get('Authorization'));
+
+        // 메인 페이지로 이동
+        navigate('/');
       }
     } catch (error) {
       if (error.response) {
@@ -55,13 +63,9 @@ export default function Login() {
     }
   };
 
-  const login = () => {
-    console.log('로그인 클릭');
-  };
-
   const enterkeydown = (e) => {
     if (e.keyCode === 13) {
-      login();
+      handlesubmit(e);
     }
   };
 

@@ -12,6 +12,7 @@ export default function Board() {
 
     const [writeopen, setWriteOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [boardData, setBoardData] = useState([]);
 
     const PopupOpen = () => {
         setWriteOpen(true);
@@ -20,14 +21,32 @@ export default function Board() {
     const PopupClose = () => {
         setWriteOpen(false);
     };
-    
 
-  const boardData = [
-    { number: 1, title: '안녕하세요 첫 글입니다 안녕하세요 첫 글 입니다 40자 초과시켜 봅시다 제에바앙랑랑제발나와라아린아런이', name: '류승진', day: new Date(), check: 20, up: 0 },
-    { number: 2, title: '두 번째 글입니다', name: '김준우', day: new Date(), check: 15, up: 3 },
-    { number: 3, title: '나혼렙 존잼', name: '정원영', day: new Date(), check: 10, up: 5 },
-    { number: 5, title: '열혈초등학교 존잼', name: '김준영', day: new Date(), check: 30, up: 7 },
-  ];
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+    const token = localStorage.getItem('authToken');
+  // const boardData = [
+  //   { number: 1, title: '안녕하세요 첫 글입니다 안녕하세요 첫 글 입니다 40자 초과시켜 봅시다 제에바앙랑랑제발나와라아린아런이', name: '류승진', day: new Date(), check: 20, up: 0 },
+  //   { number: 2, title: '두 번째 글입니다', name: '김준우', day: new Date(), check: 15, up: 3 },
+  //   { number: 3, title: '나혼렙 존잼', name: '정원영', day: new Date(), check: 10, up: 5 },
+  //   { number: 5, title: '열혈초등학교 존잼', name: '김준영', day: new Date(), check: 30, up: 7 },
+  // ];
+  console.log(token)
+  const fetchBoardData = async () => {
+    try {
+      const response = await axios.get('http://10.125.121.117:8080/Board')
+      setBoardData(response.data)
+    } catch (error) {
+      console.error('Error :', error);
+            alert('게시글을 가져오는데 실패했습니다.');
+    }
+  };
+
+  useEffect(() => {
+    fetchBoardData();
+}, []);
+
 
   const itemsPerPage = 39;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);
@@ -36,10 +55,6 @@ export default function Board() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <div>

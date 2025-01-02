@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
 import Logo from '../Image/Logo.png'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { useAuth } from './AuthProvider'
 
 export default function Title() {
 
-    const [ login, setLogin] = useState(false)
+    const { isLoggedIn, logout } = useAuth();
+    const navigate = useNavigate();
 
-    const loginToggle = () => {
-        setLogin((prev) => !prev);
-    };
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    }
 
   return (
     <div className='items-center justify-center w-[1280px] mx-auto'>
@@ -17,10 +19,10 @@ export default function Title() {
                 <img src={Logo} alt='logo' />
             </Link>
             <div className='flex items-center pt-5 pr-16'>
-                { login ? 
+                { isLoggedIn ? 
                 (
                     <>
-                        <button onClick={loginToggle} className='px-3 border-r'>
+                        <button onClick={handleLogout} className='px-3 border-r'>
                             로그아웃
                         </button>
 

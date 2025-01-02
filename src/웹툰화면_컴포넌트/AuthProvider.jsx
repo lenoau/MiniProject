@@ -5,12 +5,17 @@ const AuthContext = createContext();
 export const AuthProvider = ( {children} ) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const toggleLogin = () => {
-        setIsLoggedIn((prev) => !prev);
-    };
+    const login = () => {
+        setIsLoggedIn(true);
+      };
+      
+    const logout = () => {
+        localStorage.removeItem('authToken'); // 토큰 제거
+        setIsLoggedIn(false); // 전역 상태 초기화
+      };
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, toggleLogin }}>
+        <AuthContext.Provider value={{isLoggedIn, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
