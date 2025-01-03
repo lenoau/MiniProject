@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Close from '../Image/닫기.png';
 import BoardClose from './BoardClose';
 import axios from 'axios';
+// import { body } from 'framer-motion/client';
 
 export default function BoardWrite({ onClose }) {
     const [writeclose, setWriteClose] = useState(false);
@@ -30,7 +31,7 @@ export default function BoardWrite({ onClose }) {
             await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
                 {
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
+                        'Authorization': `${token}`, // Bearer 토큰 방식으로 인증
                         'Content-Type': 'application/json'  
                       }
                 }

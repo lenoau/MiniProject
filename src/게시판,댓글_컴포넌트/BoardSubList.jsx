@@ -15,18 +15,18 @@ export default function BoardSubList(props) {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(`http://10.125.121.117:8080/comments/${props.postId}`);
-        setComments(response.data);
-      } catch (error) {
-        console.error('Error :', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchComments = async () => {
+  //     try {
+  //       const response = await axios.get(`http://10.125.121.117:8080/comment/`);
+  //       setComments(response.data);
+  //     } catch (error) {
+  //       console.error('Error :', error);
+  //     }
+  //   };
 
-    fetchComments();
-  }, [props.postId]);
+  //   fetchComments();
+  // }, [props.postId]);
 
   const onComment = () => {
     setCommenting(true);
@@ -47,7 +47,7 @@ export default function BoardSubList(props) {
         };
 
         // 서버에 댓글 저장
-        const response = await axios.post(`http://10.125.121.117:8080/comments/${props.postId}`, newComment);
+        const response = await axios.post(`http://10.125.121.117:8080/commentWrite/`, newComment);
 
         // 서버에서 반환된 데이터로 댓글 목록 업데이트
         setComments((prevComments) => [...prevComments, response.data]);
@@ -67,19 +67,19 @@ export default function BoardSubList(props) {
     <div>
       <div className="flex flex-col mt-10">
         <span className="text-3xl font-bold Title">{props.title}</span>
-        <div className="Name text-[#37acc9] font-bold mt-5">{props.name}</div>
+        <div className="Name text-[#37acc9] font-bold mt-5">{props.nickName}</div>
         <div className="flex mt-5 mb-10 text-[#94969b]">
           <span className="flex mr-5 Time">
             <img src={leadtime} alt="leadtime" className="mr-2" />
-            <CommentTime date={props.day} />
+            <CommentTime date={props.createdate}/>
           </span>
           <span className="flex mr-5 Lead">
             <img src={lead} alt="lead" className="mr-2" />
-            {props.check}
+            {props.hit}
           </span>
           <span className="flex UP">
             <img src={commentcount} alt="commentcount" className="mr-2" />
-            {comments.length}
+            {props.likes}
           </span>
         </div>
         <div className="pt-10 border-t Board">{props.content}</div>
@@ -118,7 +118,7 @@ export default function BoardSubList(props) {
       )}
         </div>
         <div className="pt-10 mt-10 text-2xl font-bold border-t Comment">
-          댓글 {2}
+          댓글
         </div>
         <div className="mt-10 CommentList">
           <CommentList />

@@ -2,16 +2,25 @@ import React from 'react'
 import Comment from './Comment'
 
 export default function CommentList( {comments} ) {
+  
+  const safeComments = Array.isArray(comments) ? comments : [];
+
+  console.log('comments:', safeComments);
+
   return (
     <div>
-      {comments.map((comment, index) => (
-        <Comment
-          key={index}
-          name={comment.name}
-          comment={comment.comment}
-          day={new Date(comment.day).toLocaleDateString()}
-        />
-      ))}
+        {safeComments.length === 0 ? (
+        <p>댓글이 없습니다.</p>
+      ) : (
+        safeComments.map((comment) => (
+          <Comment
+            key={comment.id}
+            nickName={comment.nickName}
+            content={comment.content}
+            createDate={new Date(comment.createDate).toLocaleDateString()}
+          />
+        ))
+      )}
     </div>
   )
 }
