@@ -24,7 +24,8 @@ export default function CommentTime({date}) {
 	} else if (Time < (day * 7)) {
 		CommentTime = Math.trunc(Time / day) + "일 전";
 	} else {
-		CommentTime = Math.trunc(date, "yyyy.MM.dd");
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    	CommentTime = date.toLocaleDateString('ko-KR', options);
 	}
 	
 	return CommentTime;

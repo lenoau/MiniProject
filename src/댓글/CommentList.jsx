@@ -12,12 +12,12 @@ export default function CommentList( {comments} ) {
         {safeComments.length === 0 ? (
         <p>댓글이 없습니다.</p>
       ) : (
-        safeComments.map((comment) => (
+        safeComments.map((comment, index) => (
           <Comment
-            key={comment.id}
+            key={index}
             nickName={comment.nickName}
             content={comment.content}
-            createDate={new Date(comment.createDate).toLocaleDateString()}
+            createDate={new Date(comment.createDate.replace(' ', 'T'))}
           />
         ))
       )}

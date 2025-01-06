@@ -11,9 +11,9 @@ const [down, setDown] = useState(0);
 return (
   <div className='flex justify-between h-full pt-3 pb-5 border-b-2 border-gray-300'>
       <div className='flex flex-col justify-center ml-8'>
-          <span className='text-[18px] text-black font-bold'>{props.name}</span>
-          <span className='text-[15px] text-black'>{props.comment}</span>
-          <span className='text-[12px] text-gray-600'><CommentTime date={props.day}/></span>
+          <span className='text-[18px] text-black font-bold'>{props.nickName}</span>
+          <span className='text-[15px] text-black mt-2'>{props.content}</span>
+          <span className='text-[12px] text-gray-600 mt-2'><CommentTime date={props.createDate}/></span>
       </div>
       <div className='flex mt-auto'>
         <button className='flex items-center mr-2 border rounded-md' onClick={() => {setup(up + 1)}}>
