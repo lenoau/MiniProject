@@ -16,10 +16,6 @@ export default function BoardSubList(props) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터 가져오기
   const community_id = queryParams.get('id');
-  // const [user, setUser] = useState(() => {
-  //   const userId = localStorage.getItem('userId');
-  //   return userId ? JSON.parse(userId) : { nickName: '익명' };
-  // });
 
   useEffect(() => {
     const fetchComments = async () => {

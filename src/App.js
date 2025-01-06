@@ -14,11 +14,14 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import DayKakao from './KakaoDay/DayKakao';
 import DayKakaoPage from './KakaoPageDay/DayKakaoPage';
 import { AuthProvider } from './웹툰화면_컴포넌트/AuthProvider';
+import { Favorite } from './메인_웹툰화면/Favorite';
 
 export default function App() {
+
   return (
     <div className='Main'>
       <AuthProvider>
+        <Favorite>
         <BrowserRouter>
           <Routes>
             {/* 기본 메인 페이지 */}
@@ -47,6 +50,7 @@ export default function App() {
             <Route path='/day/KakaoPageMain/:id' element={<DayKakaoPage />} />
           </Routes>
         </BrowserRouter>
+        </Favorite>
       </AuthProvider>
     </div>
   );

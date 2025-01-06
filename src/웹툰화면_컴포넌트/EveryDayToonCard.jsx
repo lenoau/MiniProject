@@ -1,64 +1,39 @@
-import React, { useState } from 'react';
-import like from '../Image/좋아요.png';
+import React, { useContext } from 'react';
+import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 
 export default function EveryDayToonCard({ webtoons }) {
-  // 좋아요 상태를 관리하는 useState
-  const [likedWebtoons, setLikedWebtoons] = useState(
-    JSON.parse(localStorage.getItem('likedWebtoons')) || [] // localStorage에서 이전에 좋아요한 웹툰 목록 불러오기
-  );
+  const { likedWebtoons, addWebtoon, removeWebtoon } = useContext(LikedWebtoonContext);
 
-  // 좋아요 클릭 핸들러
   const handleLike = (webtoon) => {
-    const isLiked = likedWebtoons.some((liked) => liked.id === webtoon.id); // 이미 좋아요한 웹툰인지 확인
-
+    const isLiked = likedWebtoons.some((liked) => liked.id === webtoon.id);
     if (isLiked) {
-      // 이미 좋아요한 웹툰이라면 목록에서 제거
-      const updatedWebtoons = likedWebtoons.filter((liked) => liked.id !== webtoon.id);
-      setLikedWebtoons(updatedWebtoons);
-      localStorage.setItem('likedWebtoons', JSON.stringify(updatedWebtoons));
+      removeWebtoon(webtoon.id);
     } else {
-      // 좋아요하지 않았다면 목록에 추가
-      const updatedWebtoons = [...likedWebtoons, webtoon];
-      setLikedWebtoons(updatedWebtoons);
-      localStorage.setItem('likedWebtoons', JSON.stringify(updatedWebtoons));
+      addWebtoon(webtoon);
     }
   };
 
   return (
     <div>
-      <div>
-        {webtoons.map((webtoon) => (
-          <a
-            key={webtoon.id}
-            href={webtoon.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col pb-2 group"
-          >
-            <div className="flex justify-center">
-              <img
-                src={webtoon.thumbnail[0]}
-                alt="webtoonimg"
-                className="h-[250px] w-[170px] border rounded-md object-cover mb-3 transform transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <span className="text-lg font-bold">
-              <span className="block overflow-hidden text-ellipsis whitespace-nowrap">
-                {webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}
-              </span>
-            </span>
+      {webtoons.map((webtoon) => (
+        <div key={webtoon.id} className="flex flex-col pb-2 group items-center">
+          <a href={webtoon.url} target="_blank" rel="noopener noreferrer">
+            <img
+              src={webtoon.thumbnail[0]}
+              alt={webtoon.title}
+              className="h-[250px] w-[170px] border rounded-md object-cover mb-2 transform transition-transform duration-300 group-hover:scale-105"
+            />
           </a>
-        ))}
-
-        {/* 좋아요 버튼 */}
-        <div className="flex justify-end">
-          <button className="" onClick={() => handleLike(webtoons)}>
-            <span className="w-[20px] h-[20px] ml-auto mr-3 mb-3">
-              {likedWebtoons.some((liked) => liked.id === webtoons.id) ? '🤍' : '❤️'}
+          <div className='flex justify-between w-full mb-2'>
+            <span className='block overflow-hidden text-ellipsis whitespace-nowrap ml-2'>
+              {webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}
             </span>
-          </button>
+            <button className='mr-2' onClick={() => handleLike(webtoon)}>
+              {likedWebtoons.some((liked) => liked.id === webtoon.id) ? '❤️' : '🤍'}
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }
