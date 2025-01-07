@@ -6,7 +6,6 @@ export default function CommentList( {comments} ) {
   const safeComments = Array.isArray(comments) ? comments : [];
 
   console.log('comments:', safeComments);
-
   return (
     <div>
         {safeComments.length === 0 ? (

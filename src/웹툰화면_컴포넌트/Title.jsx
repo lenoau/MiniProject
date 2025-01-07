@@ -26,7 +26,7 @@ export default function Title() {
                         <button onClick={handleLogout} className='px-3 border-r'>
                             로그아웃
                         </button>
-
+                        
                         <Link to='/MyPage' className='px-3'>
                             <span>마이페이지</span>
                         </Link>
