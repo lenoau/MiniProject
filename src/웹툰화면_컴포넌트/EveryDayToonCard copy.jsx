@@ -3,7 +3,7 @@ import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 
 export default function EveryDayToonCard({ webtoons }) {
   const { likedWebtoons, addWebtoon, removeWebtoon } = useContext(LikedWebtoonContext);
-  console.log('everyDayToonCard in')
+
   const handleLike = (webtoon) => {
     console.log('webtoons', webtoon)
     const isLiked = likedWebtoons.some((liked) => liked.id === webtoon.id);

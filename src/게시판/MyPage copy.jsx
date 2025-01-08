@@ -24,16 +24,12 @@ export default function MyPage() {
               className="flex flex-col pb-2 group"
             >
               <img
-                src={webtoon.thumbnail?.[0]}
-                alt={webtoon.title}
+                src={webtoon.picture}
+                alt={webtoon.name}
                 className="h-[300px] w-[240px] object-cover rounded-md group-hover:scale-105"
               />
-               <span className='font-bold block overflow-hidden text-ellipsis whitespace-nowrap w-[240px]'>
-               {webtoon?.title
-      ? webtoon.title.length > 15
-        ? webtoon.title.slice(0, 15) + '...'
-        : webtoon.title
-      : '제목 없음'}
+              <span className='font-bold block overflow-hidden text-ellipsis whitespace-nowrap w-[240px]'>
+                {webtoon.name ? webtoon.name.length > 15 ? webtoon.name.slice(0, 15) + '...' : webtoon.name : ""}
               </span>
             </a>
             

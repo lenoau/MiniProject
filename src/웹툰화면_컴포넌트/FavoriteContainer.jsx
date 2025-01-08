@@ -1,26 +1,23 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MyPage from '../게시판/MyPage';
+import EveryDayToonCard from './EveryDayToonCard';
 
-export const LikedWebtoonContext = createContext();
-
-export default function LikedWebtoonProvider({ children }) {
+export default function FavoriteContainer({ webtoons }) {
 
   const [likedWebtoons, setLikedWebtoons] = useState([]);
-
+  console.log('FavoriteContainer in')
   useEffect(() => {
-    console.log('Favorite in')
     const fetchLikedWebtoons = async () => {
       const token = localStorage.getItem('authToken');
       if (!token) return;
 
       try {
-        console.log('Favorite in2')
         const response = await axios.get(`http://10.125.121.117:8080/favorites`, {
           headers: { 
                       Authorization: `${token}` 
                    },
         });
-
         const uniqueWebtoons = response.data.filter((value, index, self) => {
           return index === self.findIndex((t) => (t.id === value.id));
         });
@@ -74,8 +71,14 @@ export default function LikedWebtoonProvider({ children }) {
   };
 
   return (
-    <LikedWebtoonContext.Provider value={{ likedWebtoons, addWebtoon, removeWebtoon }}>
-      {children}
-    </LikedWebtoonContext.Provider>
+    <div>
+        <MyPage likedWebtoons={likedWebtoons} />
+            <EveryDayToonCard 
+                webtoons={webtoons}
+                likedWebtoons={likedWebtoons}
+                addWebtoon={addWebtoon}
+                removeWebtoon={removeWebtoon}
+            />
+    </div>
   );
 }

@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 import Title from '../웹툰화면_컴포넌트/Title';
 
 export default function MyPage() {
-
-  const { likedWebtoons } = useContext(LikedWebtoonContext);
+  
+  const { likedWebtoons, fetchLikedWebtoons } = useContext(LikedWebtoonContext);
+  
+  useEffect(() => {
+    console.log('My Page in')
+    fetchLikedWebtoons();
+  }, [fetchLikedWebtoons]);
 
   return (
     <div>
@@ -32,7 +37,6 @@ export default function MyPage() {
                 {webtoon.name ? webtoon.name.length > 15 ? webtoon.name.slice(0, 15) + '...' : webtoon.name : ""}
               </span>
             </a>
-            
           ))
         ) : (
           <p>좋아요한 웹툰이 없습니다.</p>

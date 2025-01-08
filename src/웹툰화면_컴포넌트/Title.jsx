@@ -1,15 +1,27 @@
 import Logo from '../Image/Logo.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from './AuthProvider'
+// import { useAuth } from './AuthProvider'
+import { useEffect, useState } from 'react';
 
 export default function Title() {
 
-    const { isLoggedIn, logout } = useAuth();
+    // const { isLoggedIn, logout } = useAuth(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (localStorage.getItem('authToken')) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+            navigate('/');
+        }
+    },[isLoggedIn]);
+
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        logout();
+        localStorage.removeItem('authToken');
+        // logout();
+        setIsLoggedIn(false);
         navigate('/');
     }
 
