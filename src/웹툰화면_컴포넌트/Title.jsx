@@ -21,6 +21,7 @@ export default function Title() {
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         // logout();
+        alert('로그아웃 완료')
         setIsLoggedIn(false);
         navigate('/');
     }

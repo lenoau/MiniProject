@@ -42,8 +42,7 @@ export default function Board() {
     fetchBoardData();
 }, []);
 
-
-  const itemsPerPage = 39;
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);
 
   const currentData = boardData.slice(
@@ -123,14 +122,14 @@ export default function Board() {
                   </button>
               </li>
           </ul>
-          <div className='SearchCategory inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
+          {/* <div className='SearchCategory inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
             <select className='h-[40px] pr-10 border-r-2'>
               <option>제목</option>
               <option>글쓴이</option>
             </select>
             <input className='h-[40px] w-[230px]' type='text' name='keyword' />
             <button className='Search h-[40px] w-[60px] pl-3 border-l-2' type='submit'><img src={Search} alt='search' /></button>
-          </div>
+          </div> */}
         </div>
         </article>
     </div>

@@ -28,8 +28,7 @@ export default function Login() {
     e.preventDefault();
     
     try {
-      const response = await axios.post(
-        'http://10.125.121.117:8080/login', user, 
+      const response = await axios.post( 'http://10.125.121.117:8080/login', user, 
         {
           headers: { 
             'Content-Type': 'application/json', 
