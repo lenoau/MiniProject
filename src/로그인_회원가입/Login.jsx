@@ -66,21 +66,24 @@ export default function Login() {
     e.preventDefault();
 
     let authUrl = '';
+    const clientId = '{YOUR_CLIENT_ID}';  // 클라이언트 ID
+    const redirectUri = 'http://10.125.121.117:8080/oauth2/callback';  // 인증 후 리디렉션될 URL
+
     switch (provider) {
       case 'kakao':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/kakao';
-        break;
-      case 'naver':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/naver';
-        break;
-      case 'google':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/google';
-        break;
-      default:
-        console.error('Unsupported provider');
-        return;
+      authUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+      break;
+    case 'naver':
+      authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE`;
+      break;
+    case 'google':
+      authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20profile%20email&response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=STATE`;
+      break;
+    default:
+      console.error('Unsupported provider');
+      return;
     }
-
+    
     try {
       window.location.href = authUrl;
     } catch (error) {

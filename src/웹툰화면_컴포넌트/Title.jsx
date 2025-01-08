@@ -16,7 +16,7 @@ export default function Title() {
             setIsLoggedIn(false);
             navigate('/');
         }
-    },[isLoggedIn]);
+    },[]);
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
