@@ -14,7 +14,6 @@ export default function Title() {
             setIsLoggedIn(true);
         } else {
             setIsLoggedIn(false);
-            navigate('/');
         }
     },[]);
 
@@ -56,7 +55,6 @@ export default function Title() {
                         </Link>
                     </>
                 )}
-                
             </div>
         </div>
         <div className='pt-2 border-b-2 border-black'></div>

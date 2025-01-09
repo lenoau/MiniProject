@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Left from '../Image/left.png'
 import Right from '../Image/right.png'
-import Search from '../Image/검색마크.png'
+// import Search from '../Image/검색마크.png'
 import BoardList from './BoardList'
 import Title from '../웹툰화면_컴포넌트/Title'
 import BoardWrite from './BoardWrite'
@@ -38,9 +38,14 @@ export default function Board() {
     }
   };
 
+  const handleNewPost = (newPost) => {
+    setBoardData((prevData) => [newPost, ...prevData]);
+    PopupClose(); // 글쓰기 팝업 닫기
+};
+
   useEffect(() => {
     fetchBoardData();
-}, []);
+}, [boardData]);
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);
@@ -85,7 +90,7 @@ export default function Board() {
                 <button onClick={PopupOpen} className="inline-block">
                   <div className="p-2 font-bold text-center border-2 bg-slate-200">글쓰기</div>
                 </button>
-                {writeopen && <BoardWrite onClose={PopupClose} />}
+                {writeopen && <BoardWrite onClose={PopupClose} onNewPost={handleNewPost} />}
               </div>
             </div>
           </section>

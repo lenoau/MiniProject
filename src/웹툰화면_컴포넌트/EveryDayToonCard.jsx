@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 
-export default function EveryDayToonCard({ webtoons }) {
-  const { likedWebtoons, addWebtoon, removeWebtoon } = useContext(LikedWebtoonContext);
-  console.log('everyDayToonCard in')
+export default function EveryDayToonCard({ webtoons , likedWebtoonsList}) {
+  const { addWebtoon, removeWebtoon } = useContext(LikedWebtoonContext);
+  const codes = [...new Set(likedWebtoonsList.map(item => item.code))]
+  
+  const webtoon = webtoons[0];
+  const isLiked = codes.includes(webtoon.id.trim()); // true or false
+  
+  console.log('likedWebtoons', webtoon.id.trim(), isLiked, codes);
+
   const handleLike = (webtoon) => {
-    console.log('webtoons', webtoon)
-    const isLiked = likedWebtoons.some((liked) => liked.id === webtoon.id);
     if (isLiked) {
       removeWebtoon(webtoon.id);
     } else {
@@ -16,7 +20,8 @@ export default function EveryDayToonCard({ webtoons }) {
 
   return (
     <div>
-      {webtoons.map((webtoon) => (
+      {
+      // webtoons.map((webtoon) => (
         <div key={webtoon.id} className="flex flex-col items-center pb-2 group">
           <a href={webtoon.url} target="_blank" rel="noopener noreferrer">
             <img
@@ -30,11 +35,12 @@ export default function EveryDayToonCard({ webtoons }) {
               {webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}
             </span>
             <button className='mr-2' onClick={() => handleLike(webtoon)}>
-              {likedWebtoons.some((liked) => liked.id === webtoon.id) ? '❤️' : '🤍'}
+              {isLiked ? '❤️' : '🤍'}
             </button>
           </div>
         </div>
-      ))}
+      // ))
+      }
     </div>
   );
 }

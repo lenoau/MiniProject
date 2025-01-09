@@ -48,7 +48,7 @@ export default function Board() {
           <section>
             <div>
               <table className="w-full text-sm">
-                <thead class="font-bold border-b">
+                <thead className="font-bold border-b">
                     <tr>
                       <th className='px-5 py-2 w-[100px]'>번호</th>
                       <th className='px-5 py-2 w-[540px]'>제목</th>

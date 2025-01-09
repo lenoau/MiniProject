@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div className='Main'>
       <AuthProvider>
-          <BrowserRouter>
+        <BrowserRouter>
           <Favorite> 
             <Routes>
               {/* 기본 메인 페이지 */}
@@ -30,6 +30,7 @@ export default function App() {
               {/* 로그인 및 회원가입 */}
               <Route path='/Login' element={<Login />} />
               <Route path='/Membership' element={<MemberShip />} />
+              <Route path='./oauth2/callback' element={<OAuthCallback/>} />
 
               {/* 게시판 관련 */}
               <Route path='/Board' element={<BoardMain />} />
@@ -48,12 +49,9 @@ export default function App() {
               <Route path='/day/NaverMain/:id' element={<DayNaver />} />
               <Route path='/day/KakaoMain/:id' element={<DayKakao />} />
               <Route path='/day/KakaoPageMain/:id' element={<DayKakaoPage />} />
-
-              {/* OAuth2 리디렉션 경로 */}
-              <Route path='./로그인_회원가입/OauthCallback.jsx' element={<OAuthCallback/>} />
             </Routes>
-            </Favorite>
-          </BrowserRouter>
+          </Favorite>
+        </BrowserRouter>
       </AuthProvider>
     </div>
   );
