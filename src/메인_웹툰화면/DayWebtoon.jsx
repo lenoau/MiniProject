@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Title from '../웹툰화면_컴포넌트/Title';
 import EveryDayToonCard from '../웹툰화면_컴포넌트/EveryDayToonCard';
@@ -9,7 +9,9 @@ export default function Day() {
   const token = localStorage.getItem('authToken');  // 로그인 상태 확인
   const [webtoonData, setWebtoonData] = useState({});
   const [likedWebtoons, setLikedWebtoons] = useState([]);
+  const [visibleItems, setVisibleItems] = useState({});
   const apikey = 'https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/webtoons?';
+  const itemsPerLoad = 5; //5개씩 업로드
 
   const days = {
     MON: '월요웹툰',
@@ -25,13 +27,13 @@ export default function Day() {
     try {
       const fetchedData = {};
       for (const [key] of Object.entries(days)) {
-        const neresponse = await fetch(`${apikey}provider=NAVER&page=1&perPage=2&isFree=true&updateDay=${key}`);
+        const neresponse = await fetch(`${apikey}provider=NAVER&page=1&perPage=50&isFree=true&updateDay=${key}`);
         const nedata = await neresponse.json();
 
-        const karesponse = await fetch(`${apikey}provider=KAKAO&page=1&perPage=2&isFree=true&updateDay=${key}`);
+        const karesponse = await fetch(`${apikey}provider=KAKAO&page=1&perPage=50&isFree=true&updateDay=${key}`);
         const kadata = await karesponse.json();
 
-        const kapageresponse = await fetch(`${apikey}provider=KAKAO_PAGE&page=1&perPage=2&isFree=true&updateDay=${key}`);
+        const kapageresponse = await fetch(`${apikey}provider=KAKAO_PAGE&page=1&perPage=50&isFree=true&updateDay=${key}`);
         const kapagedata = await kapageresponse.json();
         
         fetchedData[key] = [
@@ -41,10 +43,50 @@ export default function Day() {
         ];
       }
       setWebtoonData(fetchedData);
+
+      // 초기 표시 항목 설정 (각 요일별로 5개씩)
+      const initialVisibleItems = {};
+      Object.keys(fetchedData).forEach((key) => {
+        initialVisibleItems[key] = fetchedData[key].slice(0, itemsPerLoad);
+      });
+      setVisibleItems(initialVisibleItems);
     } catch (error) {
       console.error('웹툰 데이터 로딩 오류:', error);
     }
   };
+
+  const handleScroll = useCallback(() => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      console.log('Load more data');
+      loadMoreData();
+    }
+  }, [visibleItems, webtoonData]);
+
+  const loadMoreData = () => {
+    const updatedVisibleItems = { ...visibleItems };
+    Object.keys(webtoonData).forEach((key) => {
+      if (webtoonData[key].length > visibleItems[key].length) {
+        const nextVisible = webtoonData[key].slice(0, visibleItems[key].length + itemsPerLoad);
+        updatedVisibleItems[key] = nextVisible;
+      }
+    });
+    setVisibleItems(updatedVisibleItems);
+  };
+
+  useEffect(() => {
+    fetchAllWebtoons();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   const fetchMy = async () => {
     if (token) {  // 로그인된 경우에만 좋아요 웹툰 가져오기

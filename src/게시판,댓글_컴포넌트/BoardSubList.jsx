@@ -20,6 +20,8 @@ export default function BoardSubList(props) {
   const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터 가져오기
   const community_id = queryParams.get('id');
 
+
+  //댓글 출력
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -47,6 +49,8 @@ export default function BoardSubList(props) {
     setContent('');
   };
 
+
+  //댓글 작성
   const handleSubmit = async () => {
     if (content.trim()) {
       try {
@@ -80,9 +84,15 @@ export default function BoardSubList(props) {
     setEditedContent(props.content);
   };
 
+
+  //게시글 수정
   const submitEdit = async () => {
+    if (!editedTitle.trim() || !editedContent.trim()) {
+      alert('제목과 내용을 모두 입력해주세요.');
+      return;
+    }
     try {
-      await axios.put('http://10.125.121.117:8080/updateBoard', 
+     const response =  await axios.put('http://10.125.121.117:8080/updateBoard', 
         {
           title: editedTitle,
           content: editedContent,
@@ -95,32 +105,44 @@ export default function BoardSubList(props) {
         }
       );
 
-      // 수정 완료 후 UI 업데이트
-      props.onUpdate({
-        id: props.id,
-        title: editedTitle,
-        content: editedContent,
-      });
+      if (response.status === 200) {
+        // 수정 완료 후 UI 업데이트
+        props.onUpdate({
+          id: props.id,
+          title: editedTitle,
+          content: editedContent,
+        });
+        setIsEditing(false); // 수정 모드 비활성화
+        alert('게시글이 수정되었습니다.');
+      } else {
+        alert('수정에 실패했습니다. 다시 시도해주세요.');
+      }
 
-      setIsEditing(false); // 수정 모드 비활성화
     } catch (error) {
       console.error('Error updating post:', error);
       alert('수정에 실패했습니다.');
     }
   };
 
+  //게시글 삭제
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await axios.delete(`http://10.125.121.117:8080/deletBoard${community_id}`, {
+       const response = await axios.delete(`http://10.125.121.117:8080/deletBoard/${community_id}`, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: `${token}`,  
           },
           withCredentials: true,
         });
         
-        // 삭제 완료 후 부모 컴포넌트에서 제거
-        props.onDelete(props.id);
+        if (response.status === 200) {
+          // 삭제 완료 후 부모 컴포넌트에서 제거
+          props.onDelete(props.id);
+          alert('게시글이 삭제되었습니다.');
+        } else {
+          alert('삭제에 실패했습니다. 다시 시도해주세요.');
+        }
+        
       } catch (error) {
         console.error('Error deleting post:', error);
         alert('삭제에 실패했습니다.');
