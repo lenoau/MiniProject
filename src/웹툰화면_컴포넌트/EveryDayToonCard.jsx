@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 
-export default function EveryDayToonCard({ webtoons , likedWebtoonsList}) {
+export default function EveryDayToonCard({ webtoons , likedWebtoonsList, handleLike}) {
   const { addWebtoon, removeWebtoon } = useContext(LikedWebtoonContext);
   const codes = [...new Set(likedWebtoonsList.map(item => item.code))]
   
@@ -10,12 +10,21 @@ export default function EveryDayToonCard({ webtoons , likedWebtoonsList}) {
   
   console.log('likedWebtoons', webtoon.id.trim(), isLiked, codes);
 
-  const handleLike = (webtoon) => {
+  const handleLike2 = (webtoon) => {
     if (isLiked) {
       removeWebtoon(webtoon.id);
     } else {
       addWebtoon(webtoon);
     }
+  };
+
+  const combinedHandleLike = (webtoon) => {
+    // handleLike 호출
+    if (handleLike) {
+      handleLike(webtoon);
+    }
+    // handleLike2 호출
+    handleLike2(webtoon);
   };
 
   return (
@@ -34,7 +43,7 @@ export default function EveryDayToonCard({ webtoons , likedWebtoonsList}) {
             <span className='block ml-2 overflow-hidden text-ellipsis whitespace-nowrap'>
               {webtoon.title.length > 15 ? webtoon.title.slice(0, 15) + '...' : webtoon.title}
             </span>
-            <button className='mr-2' onClick={() => handleLike(webtoon)}>
+            <button className='mr-2' onClick={() => combinedHandleLike(webtoon)}>
               {isLiked ? '❤️' : '🤍'}
             </button>
           </div>

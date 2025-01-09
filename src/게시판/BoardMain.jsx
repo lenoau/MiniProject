@@ -38,14 +38,21 @@ export default function Board() {
     }
   };
 
-  const handleNewPost = (newPost) => {
-    setBoardData((prevData) => [newPost, ...prevData]);
-    PopupClose(); // 글쓰기 팝업 닫기
+  const handleNewPost = async (newPost) => {
+    try {
+        // 새 게시글 서버에 등록하는 API 요청
+        await axios.post('http://10.125.121.117:8080/board', newPost);
+        fetchBoardData(); // 최신 데이터를 다시 가져오기
+    } catch (error) {
+        console.error('Error adding new post:', error);
+    } finally {
+        PopupClose(); // 글쓰기 팝업 닫기
+    }
 };
 
   useEffect(() => {
     fetchBoardData();
-}, [boardData]);
+}, []);
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);

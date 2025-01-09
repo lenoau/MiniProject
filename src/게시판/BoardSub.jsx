@@ -59,6 +59,7 @@ export default function BoardSub() {
             nickName={item.nickName}
             createDate={new Date(item.createDate.replace(' ', 'T'))}
             hit={item.hit}
+            content={item.content}
             comment={item.comment}
             likes={item.likes}
             onUpClick={() => handleUpClick(item.id)} 
