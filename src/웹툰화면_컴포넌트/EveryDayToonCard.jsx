@@ -8,7 +8,7 @@ export default function EveryDayToonCard({ webtoons , likedWebtoonsList, handleL
   const webtoon = webtoons[0];
   const isLiked = codes.includes(webtoon.id.trim()); // true or false
   
-  console.log('likedWebtoons', webtoon.id.trim(), isLiked, codes);
+  // console.log('likedWebtoons', webtoon.id.trim(), isLiked, codes);
 
   const handleLike2 = (webtoon) => {
     if (isLiked) {

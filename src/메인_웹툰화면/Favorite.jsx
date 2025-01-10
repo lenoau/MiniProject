@@ -1,10 +1,28 @@
 import React, { createContext, useState, useCallback } from 'react';
 import axios from 'axios';
+// import { useLocation } from 'react-router-dom';
 
 export const LikedWebtoonContext = createContext();
 
 export default function Favorite({ children }) {
   const [likedWebtoons, setLikedWebtoons] = useState([]);
+
+  // const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터 가져오기
+  // const userId = queryParams.get('id');
+
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+  
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // JWT의 페이로드 디코드
+      return payload.userId; // JWT 페이로드에서 userId 추출
+    } catch (error) {
+      console.error('Failed to parse token:', error);
+      return null;
+    }
+  };
 
   const fetchLikedWebtoons = useCallback(async () => {
     const token = localStorage.getItem('authToken');
@@ -16,11 +34,7 @@ export default function Favorite({ children }) {
           Authorization: `${token}`,
         },
       });
-      console.log('Fetching liked webtoons', response.data);
-      // const uniqueWebtoons = response.data.filter((value, index, self) =>
-      //   self.findIndex((t) => t.id === value.id) === index
-      // );
-      // console.log('uniqueWebtoons', uniqueWebtoons);
+
       setLikedWebtoons(response.data);
     } catch (error) {
       console.error('Failed to fetch liked webtoons:', error);
@@ -55,22 +69,40 @@ export default function Favorite({ children }) {
     }
   };
 
-  // const removeWebtoon = async (id) => {
-  //   const token = localStorage.getItem('authToken');
-  //   if (!token) return;
+  const removeWebtoon = async (code) => {
+    const token = localStorage.getItem('authToken');
+    const userId = getUserIdFromToken(); // JWT에서 userId 추출
 
-  //   try {
-  //     await axios.delete(`http://10.125.121.117:8080/favorite`, {
-  //       headers: { Authorization: `${token}` },
-  //     });
-  //     setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== id));
-  //   } catch (error) {
-  //     console.error('Failed to remove webtoon:', error);
-  //   }
-  // };
+
+    const webtoondata = {
+      code : code,
+      userId : userId
+    };
+
+    console.log('code : ', code);
+    // console.log('userId : ', userId);
+    // const token = localStorage.getItem('authToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('JWT Payload:', payload);
+    }
+
+    try {
+      await axios.delete(`http://10.125.121.117:8080/favorites`, {
+        headers: {
+          Authorization: `${token}` ,
+          'Content-Type': 'application/json',
+        },
+        data: webtoondata
+      });
+      setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== code));
+    } catch (error) {
+      console.error('Failed to remove webtoon:', error);
+    }
+  };
 
   return (
-    <LikedWebtoonContext.Provider value={{ likedWebtoons, fetchLikedWebtoons, addWebtoon }}>
+    <LikedWebtoonContext.Provider value={{ likedWebtoons, fetchLikedWebtoons, addWebtoon, removeWebtoon }}>
       {children}
     </LikedWebtoonContext.Provider>
   );

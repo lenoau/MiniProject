@@ -21,6 +21,7 @@ export default function MyPage() {
       <div className="w-[1280px] grid grid-cols-5 gap-4 mx-auto">
         {likedWebtoons.length > 0 ? (
           likedWebtoons.map((webtoon) => (
+            <div>
             <a
               key={webtoon.id}
               href={webtoon.url}
@@ -33,10 +34,11 @@ export default function MyPage() {
                 alt={webtoon.name}
                 className="h-[300px] w-[240px] object-cover rounded-md group-hover:scale-105"
               />
+              </a>
               <span className='font-bold block overflow-hidden text-ellipsis whitespace-nowrap w-[240px]'>
                 {webtoon.name ? webtoon.name.length > 15 ? webtoon.name.slice(0, 15) + '...' : webtoon.name : ""}
               </span>
-            </a>
+            </div>
           ))
         ) : (
           <p>좋아요한 웹툰이 없습니다.</p>

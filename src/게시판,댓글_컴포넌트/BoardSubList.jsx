@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import lead from '../Image/조회수.png';
 import leadtime from '../Image/업로드.png';
 import Up from '../Image/Up.png';
 import CommentList from '../댓글/CommentList';
 import CommentTime from './CommentTime';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function BoardSubList(props) {
   const [commenting, setCommenting] = useState(false);
@@ -20,6 +20,7 @@ export default function BoardSubList(props) {
   const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터 가져오기
   const community_id = queryParams.get('id');
 
+  const navigator = useNavigate();
 
   //댓글 출력
   useEffect(() => {
@@ -92,10 +93,11 @@ export default function BoardSubList(props) {
       return;
     }
     try {
-     const response =  await axios.put('http://10.125.121.117:8080/updateBoard', 
+     const response =  await axios.put(`http://10.125.121.117:8080/updateBoard`, 
         {
-          title: editedTitle,
+          id : community_id,
           content: editedContent,
+          title: editedTitle
         },
         {
           headers: {
@@ -106,14 +108,9 @@ export default function BoardSubList(props) {
       );
 
       if (response.status === 200) {
-        // 수정 완료 후 UI 업데이트
-        props.onUpdate({
-          id: props.id,
-          title: editedTitle,
-          content: editedContent,
-        });
         setIsEditing(false); // 수정 모드 비활성화
         alert('게시글이 수정되었습니다.');
+        window.location.href=`/BoardSub?id=${community_id}`;
       } else {
         alert('수정에 실패했습니다. 다시 시도해주세요.');
       }
@@ -128,7 +125,7 @@ export default function BoardSubList(props) {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-       const response = await axios.delete(`http://10.125.121.117:8080/deletBoard/${community_id}`, {
+       const response = await axios.delete(`http://10.125.121.117:8080/deleteBoard/${community_id}`, {
           headers: {
             Authorization: `${token}`,  
           },
@@ -136,9 +133,9 @@ export default function BoardSubList(props) {
         });
         
         if (response.status === 200) {
-          // 삭제 완료 후 부모 컴포넌트에서 제거
-          props.onDelete(props.id);
+
           alert('게시글이 삭제되었습니다.');
+          navigator("/Board");
         } else {
           alert('삭제에 실패했습니다. 다시 시도해주세요.');
         }
@@ -178,19 +175,19 @@ export default function BoardSubList(props) {
           <div className='ml-[900px]'>
             {isEditing ? (
               <>
-                <button className='p-2 mr-5 bg-[#bbc0c5] rounded-md text-white font-bold' onClick={submitEdit}>
+                <button className='p-2 mr-5 bg-[#bbc0c5] text-black font-bold' onClick={submitEdit}>
                   저장
                 </button>
-                <button className='p-2 mr-5 bg-[#bbc0c5] rounded-md text-white font-bold' onClick={cancelEdit}>
+                <button className='p-2 mr-5 bg-[#bbc0c5] text-black font-bold' onClick={cancelEdit}>
                   취소
                 </button>
               </>
             ) : (
               <>
-                <button className='p-2 mr-5 bg-[#bbc0c5] rounded-md text-white font-bold' onClick={handleEdit}>
+                <button className='p-2 mr-5 bg-[#bbc0c5] text-black font-bold' onClick={handleEdit}>
                   수정
                 </button>
-                <button className='p-2 mr-5 font-bold text-white bg-red-500 rounded-md' onClick={handleDelete}>
+                <button className='p-2 mr-5 font-bold text-black bg-red-200' onClick={handleDelete}>
                   삭제
                 </button>
               </>
