@@ -13,7 +13,6 @@ export default function BoardSub() {
   // 좋아요 클릭 핸들러
   const handleUpClick = async (id) => {
     try {
-      
       await axios.post(`http://10.125.121.117:8080/board/${id}`, { likes: 1 }, {id});  // 데이터에 좋아요 1 증가를 요청
       
       setBoardData((prevData) =>
